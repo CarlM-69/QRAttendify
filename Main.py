@@ -719,12 +719,12 @@ class Register(QMainWindow):
 
 						def execute_db(cursor):
 							dataset = [(
-								self.ui.first_name_fill.text(),
-								self.ui.middle_name_fill.text(),
-								self.ui.surname_fill.text(),
+								self.ui.first_name_fill.text().title(),
+								self.ui.middle_name_fill.text().title(),
+								self.ui.surname_fill.text().title(),
 								self.ui.suffix_fill.currentText(),
 								self.ui.sex_fill.currentText(),
-								self.ui.section_fill.text(),
+								self.ui.section_fill.text().upper(),
 								int(self.ui.lrn_fill.text()),
 								self.ui.email_fill.text(),
 								int(birthdate)
@@ -748,7 +748,7 @@ class Register(QMainWindow):
 								dataset
 							)
 
-							cursor.execute("SELECT id FROM students WHERE lrn = ?", (int(self.ui.lrn_fill.text())))
+							cursor.executemany("SELECT id FROM students WHERE first_name = ?", ([self.ui.first_name_fill.text().title()]))
 							owner_id = cursor.fetchone()
 
 							dataset_1 = [(
