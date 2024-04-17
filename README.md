@@ -17,6 +17,13 @@
 To run this project, you will need to add the following environment variables to your .env file
 
 `ATTENDANCE_DEV_SETUP_PASSWORD`
+## Generate Resource Files
+
+To convert *resources.qrc* into *resources.py*, you will need to run this command
+
+`pyrcc5 -o ./Resources/resources.py ./Resources/resources.qrc`
+Edit the file and edit the line 9
+`from PyQt5 import QtCore`
 ## Authors
 
 - Facebook: [@carlmathewgabay](https://www.facebook.com/carlmathewgabay)
