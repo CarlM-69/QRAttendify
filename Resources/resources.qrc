@@ -1,0 +1,23 @@
+<RCC>
+  <qresource prefix="images">
+    <file>Images/bg_1.png</file>
+    <file>Images/bg_2.png</file>
+    <file>Images/bg.png</file>
+  </qresource>
+  <qresource prefix="icons">
+    <file>Icons/drop-down_focus.png</file>
+    <file>Icons/drop-down_unfocus.png</file>
+    <file>Icons/students.png</file>
+    <file>Icons/sfhs_logo.ico</file>
+    <file>Icons/arrow_back.png</file>
+    <file>Icons/eye-close.png</file>
+    <file>Icons/eye-open.png</file>
+    <file>Icons/attendance.png</file>
+    <file>Icons/female.png</file>
+    <file>Icons/male.png</file>
+    <file>Icons/reg_student.png</file>
+    <file>Icons/settings.png</file>
+    <file>Icons/sfhs_logo.png</file>
+    <file>Icons/sfhs_logo-small.png</file>
+  </qresource>
+</RCC>
