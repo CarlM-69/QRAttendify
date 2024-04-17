@@ -23,7 +23,7 @@ To convert *resources.qrc* into *resources.py*, you will need to run this comman
 
 `pyrcc5 -o ./Resources/resources.py ./Resources/resources.qrc`<br>
 
-And then, edit the file and edit the line 9<br>
+And then, edit the file in line 9<br>
 
 `from PyQt5 import QtCore` to `from PyQt6 import QtCore`
 ## Authors
