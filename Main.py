@@ -253,6 +253,16 @@ class firstTimeSetup(QDialog):
 				)"""
 			)
 
+			cursor.execute("""CREATE TABLE IF NOT EXISTS students_attendance (
+					id INTEGER PRIMARY KEY,
+					owner_id INTEGER,
+					check_in_date INT,
+					check_in_time_hour INT,
+					check_in_time_min INT,
+					check_in_time_ampm TEXT
+				)"""
+			)
+
 		database_operation(execute_db)
 
 		self.hide()
@@ -708,19 +718,17 @@ class Register(QMainWindow):
 						birthdate = f"{ self.ui.birthdate_year_fill.currentText() }{ check___(str(self.ui.birthdate_month_fill.currentIndex())) }{ check___(self.ui.birthdate_day_fill.currentText()) }"
 
 						def execute_db(cursor):
-							dataset = [
-								(
-									self.ui.first_name_fill.text(),
-									self.ui.middle_name_fill.text(),
-									self.ui.surname_fill.text(),
-									self.ui.suffix_fill.currentText(),
-									self.ui.sex_fill.currentText(),
-									self.ui.section_fill.text(),
-									int(self.ui.lrn_fill.text()),
-									self.ui.email_fill.text(),
-									int(birthdate)
-								)
-							]
+							dataset = [(
+								self.ui.first_name_fill.text(),
+								self.ui.middle_name_fill.text(),
+								self.ui.surname_fill.text(),
+								self.ui.suffix_fill.currentText(),
+								self.ui.sex_fill.currentText(),
+								self.ui.section_fill.text(),
+								int(self.ui.lrn_fill.text()),
+								self.ui.email_fill.text(),
+								int(birthdate)
+							)]
 
 							cursor.executemany("""
 								INSERT INTO students (
@@ -738,6 +746,31 @@ class Register(QMainWindow):
 								VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
 
 								dataset
+							)
+
+							cursor.execute("SELECT id FROM students WHERE lrn = ?", (int(self.ui.lrn_fill.text())))
+							owner_id = cursor.fetchone()
+
+							dataset_1 = [(
+								owner_id,
+								int(datetime.now().strftime("%Y%m%d")),
+								int(datetime.now().strftime("%I")),
+								int(datetime.now().strftime("%M")),
+								datetime.now().strftime("%p")
+							)]
+
+							cursor.executemany("""
+								INSERT INTO students_attendance (
+									owner_id,
+									check_in_date,
+									check_in_time_hour,
+									check_in_time_min,
+									check_in_time_ampm
+								)
+							
+								VALUES (?, ?, ?, ?, ?)""",
+
+								dataset_1
 							)
 
 						database_operation(execute_db)
