@@ -370,19 +370,19 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout">
+            <layout class="QVBoxLayout" name="verticalLayout_2">
              <item>
               <widget class="QLabel" name="first_name">
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>14</pointsize>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
                <property name="text">
-                <string>&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ffffff;&quot;&gt;FIRST NAME:&lt;/span&gt;&lt;/p&gt;</string>
+                <string>&lt;p&gt;&lt;span style=&quot; font-size:13pt; font-weight:600; color:#ffffff;&quot;&gt;FIRST NAME:&lt;/span&gt;&lt;/p&gt;</string>
                </property>
               </widget>
              </item>
@@ -391,13 +391,13 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>14</pointsize>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
                <property name="text">
-                <string>&lt;p&gt;&lt;span style=&quot; font-size:14pt; color:#ffffff;&quot;&gt;MIDDLE NAME: &lt;/span&gt;&lt;span style=&quot;font-size:9pt; color:#919191;&quot;&gt;(leave empty if none)&lt;/span&gt;&lt;/p&gt;</string>
+                <string>&lt;p&gt;&lt;span style=&quot; font-size:13pt; color:#ffffff;&quot;&gt;MIDDLE NAME: &lt;/span&gt;&lt;span style=&quot;font-size:9pt; color:#919191;&quot;&gt;(leave empty if none)&lt;/span&gt;&lt;/p&gt;</string>
                </property>
               </widget>
              </item>
@@ -406,13 +406,13 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>14</pointsize>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
                <property name="text">
-                <string>&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ffffff;&quot;&gt;SURNAME:&lt;/span&gt;&lt;/p&gt;</string>
+                <string>&lt;p&gt;&lt;span style=&quot; font-size:13pt; font-weight:600; color:#ffffff;&quot;&gt;SURNAME:&lt;/span&gt;&lt;/p&gt;</string>
                </property>
               </widget>
              </item>
@@ -421,13 +421,28 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>14</pointsize>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
                <property name="text">
-                <string>&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ffffff;&quot;&gt;SUFFIX: &lt;/span&gt;&lt;span style=&quot;font-size:9pt; color:#919191;&quot;&gt;(leave empty if none)&lt;/span&gt;&lt;/p&gt;</string>
+                <string>&lt;p&gt;&lt;span style=&quot; font-size:13pt; font-weight:600; color:#ffffff;&quot;&gt;SUFFIX: &lt;/span&gt;&lt;span style=&quot;font-size:9pt; color:#919191;&quot;&gt;(leave empty if none)&lt;/span&gt;&lt;/p&gt;</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="sex">
+               <property name="font">
+                <font>
+                 <family>Trebuchet MS</family>
+                 <pointsize>13</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>&lt;p&gt;&lt;span style=&quot; font-size:13pt; font-weight:600; color:#ffffff;&quot;&gt;SEX:&lt;/span&gt;&lt;/p&gt;</string>
                </property>
               </widget>
              </item>
@@ -436,13 +451,13 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>14</pointsize>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
                <property name="text">
-                <string>&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ffffff;&quot;&gt;SECTION:&lt;/span&gt;&lt;/p&gt;</string>
+                <string>&lt;p&gt;&lt;span style=&quot; font-size:13pt; font-weight:600; color:#ffffff;&quot;&gt;SECTION:&lt;/span&gt;&lt;/p&gt;</string>
                </property>
               </widget>
              </item>
@@ -451,13 +466,13 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>14</pointsize>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
                <property name="text">
-                <string>&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ffffff;&quot;&gt;LRN:&lt;/span&gt;&lt;/p&gt;</string>
+                <string>&lt;p&gt;&lt;span style=&quot; font-size:13pt; font-weight:600; color:#ffffff;&quot;&gt;LRN:&lt;/span&gt;&lt;/p&gt;</string>
                </property>
               </widget>
              </item>
@@ -466,13 +481,13 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>14</pointsize>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
                <property name="text">
-                <string>&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ffffff;&quot;&gt;EMAIL:&lt;/span&gt;&lt;/p&gt;</string>
+                <string>&lt;p&gt;&lt;span style=&quot; font-size:13pt; font-weight:600; color:#ffffff;&quot;&gt;EMAIL:&lt;/span&gt;&lt;/p&gt;</string>
                </property>
               </widget>
              </item>
@@ -481,13 +496,13 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>14</pointsize>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
                <property name="text">
-                <string>&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ffffff;&quot;&gt;CONFIRM EMAIL:&lt;/span&gt;&lt;/p&gt;</string>
+                <string>&lt;p&gt;&lt;span style=&quot; font-size:13pt; font-weight:600; color:#ffffff;&quot;&gt;CONFIRM EMAIL:&lt;/span&gt;&lt;/p&gt;</string>
                </property>
               </widget>
              </item>
@@ -496,13 +511,13 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>14</pointsize>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
                <property name="text">
-                <string>&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ffffff;&quot;&gt;BIRTHDATE:&lt;/span&gt;&lt;/p&gt;</string>
+                <string>&lt;p&gt;&lt;span style=&quot; font-size:13pt; font-weight:600; color:#ffffff;&quot;&gt;BIRTHDATE:&lt;/span&gt;&lt;/p&gt;</string>
                </property>
               </widget>
              </item>
@@ -516,13 +531,13 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                  <property name="font">
                   <font>
                    <family>Trebuchet MS</family>
-                   <pointsize>14</pointsize>
+                   <pointsize>13</pointsize>
                    <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
                  <property name="text">
-                  <string>&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ffffff;&quot;&gt;MONTH:&lt;/span&gt;&lt;/p&gt;</string>
+                  <string>&lt;p&gt;&lt;span style=&quot; font-size:13pt; font-weight:600; color:#ffffff;&quot;&gt;MONTH:&lt;/span&gt;&lt;/p&gt;</string>
                  </property>
                 </widget>
                </item>
@@ -531,13 +546,13 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                  <property name="font">
                   <font>
                    <family>Trebuchet MS</family>
-                   <pointsize>14</pointsize>
+                   <pointsize>13</pointsize>
                    <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
                  <property name="text">
-                  <string>&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ffffff;&quot;&gt;DAY:&lt;/span&gt;&lt;/p&gt;</string>
+                  <string>&lt;p&gt;&lt;span style=&quot; font-size:13pt; font-weight:600; color:#ffffff;&quot;&gt;DAY:&lt;/span&gt;&lt;/p&gt;</string>
                  </property>
                 </widget>
                </item>
@@ -546,13 +561,13 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                  <property name="font">
                   <font>
                    <family>Trebuchet MS</family>
-                   <pointsize>14</pointsize>
+                   <pointsize>13</pointsize>
                    <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
                  <property name="text">
-                  <string>&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ffffff;&quot;&gt;YEAR:&lt;/span&gt;&lt;/p&gt;</string>
+                  <string>&lt;p&gt;&lt;span style=&quot; font-size:13pt; font-weight:600; color:#ffffff;&quot;&gt;YEAR:&lt;/span&gt;&lt;/p&gt;</string>
                  </property>
                 </widget>
                </item>
@@ -575,13 +590,13 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_2">
+            <layout class="QVBoxLayout" name="verticalLayout">
              <item>
               <widget class="QLineEdit" name="first_name_fill">
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>14</pointsize>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
@@ -617,7 +632,7 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>14</pointsize>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
@@ -644,7 +659,7 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>14</pointsize>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
@@ -680,7 +695,28 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>14</pointsize>
+                 <pointsize>13</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="frame">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="sex_fill">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Trebuchet MS</family>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
@@ -695,7 +731,7 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>14</pointsize>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
@@ -722,7 +758,7 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>14</pointsize>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
@@ -752,7 +788,7 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>14</pointsize>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
@@ -779,7 +815,7 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>14</pointsize>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
@@ -812,7 +848,7 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>14</pointsize>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
@@ -833,7 +869,7 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
@@ -863,7 +899,7 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
@@ -884,7 +920,7 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
                <property name="font">
                 <font>
                  <family>Trebuchet MS</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>13</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
@@ -912,6 +948,12 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
           <size>
            <width>800</width>
            <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
           </size>
          </property>
          <property name="frameShape">
@@ -944,7 +986,7 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
             <property name="font">
              <font>
               <family>Trebuchet MS</family>
-              <pointsize>12</pointsize>
+              <pointsize>10</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -953,10 +995,10 @@ QComboBox QListView { padding: 6px; outline: 0; background: rgb(34, 34, 34); col
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="styleSheet">
-             <string notr="true">#register_student { background: rgba(0, 0, 0, 0.4); padding: 5px 10px; }</string>
+             <string notr="true">#register_student { background: rgba(0, 0, 0, 0.4); padding: 2px 7px; }</string>
             </property>
             <property name="text">
-             <string>&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#ffffff;&quot;&gt;REGISTER STUDENT&lt;/span&gt;&lt;/p&gt;</string>
+             <string>&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#ffffff;&quot;&gt;REGISTER STUDENT&lt;/span&gt;&lt;/p&gt;</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>

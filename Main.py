@@ -399,8 +399,7 @@ class Register(QMainWindow):
 		
 		config.read("./config.ini")
 		self.ui.class_name.setText(f"<p><span style='font-weight:600; color:#ffffff;'>{ config['Info']['Name'] }</span></p>")
-		self.ui.error_message.setText("")
-		# self.showFullScreen()
+		self.showFullScreen()
 
 		suffixes = [
 			"",
@@ -411,6 +410,12 @@ class Register(QMainWindow):
 			"III",
 			"IV",
 			"V"
+		]
+
+		sex = [
+			"Select a sex.",
+			"Male",
+			"Female"
 		]
 
 		months = [
@@ -434,6 +439,7 @@ class Register(QMainWindow):
 			self.ui.middle_name_fill,
 			self.ui.surname_fill,
 			self.ui.suffix_fill,
+			self.ui.sex_fill,
 			self.ui.section_fill,
 			self.ui.lrn_fill,
 			self.ui.email_fill,
@@ -451,6 +457,7 @@ class Register(QMainWindow):
 			self.ui.middle_name_fill,
 			self.ui.surname_fill,
 			self.ui.suffix_fill,
+			self.ui.sex_fill,
 			self.ui.section_fill,
 			self.ui.lrn_fill,
 			self.ui.email_fill,
@@ -463,6 +470,9 @@ class Register(QMainWindow):
 
 		for i in suffixes:
 			self.ui.suffix_fill.addItem(i)
+
+		for i in sex:
+			self.ui.sex_fill.addItem(i)
 
 		for i in months:
 			self.ui.birthdate_month_fill.addItem(i)
@@ -482,14 +492,15 @@ class Register(QMainWindow):
 			i.enterEvent = lambda event, obj = i, type = "enter": self.fills_m(event, obj, type)
 			i.leaveEvent = lambda event, obj = i, type = "leave": self.fills_m(event, obj, type)
 
-		self.ui.first_name_fill.setValidator(QRegularExpressionValidator(QRegularExpression(r"^[a-zA-Z\s]+$")))
+		self.ui.first_name_fill.setValidator(QRegularExpressionValidator(QRegularExpression(r"^[a-zA-Z\s-]+$")))
 		self.ui.middle_name_fill.setValidator(QRegularExpressionValidator(QRegularExpression(r"^[a-zA-Z]+$")))
-		self.ui.surname_fill.setValidator(QRegularExpressionValidator(QRegularExpression(r"^[a-zA-Z\s]+$")))
+		self.ui.surname_fill.setValidator(QRegularExpressionValidator(QRegularExpression(r"^[a-zA-Z\s-]+$")))
 		self.ui.section_fill.setValidator(QRegularExpressionValidator(QRegularExpression(r"^[a-zA-Z\s]+$")))
 		self.ui.lrn_fill.setValidator(QRegularExpressionValidator(QRegularExpression(r"^\d+$")))
 		self.ui.email_fill.setValidator(QRegularExpressionValidator(QRegularExpression(r"^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$")))
 		self.ui.confirm_email_fill.setValidator(QRegularExpressionValidator(QRegularExpression(r"^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$")))
 
+		self.ui.sex_fill.model().item(0).setEnabled(False)
 		self.ui.birthdate_month_fill.model().item(0).setEnabled(False)
 		self.ui.birthdate_day_fill.model().item(0).setEnabled(False)
 		self.ui.birthdate_year_fill.model().item(0).setEnabled(False)
@@ -514,56 +525,92 @@ class Register(QMainWindow):
 								return True
 							
 						return False
+					
+					self.reset_type = "_"
+
+					def resetError_M(type):
+						if self.reset_type == type:
+							self.reset_type = "_"
+							error_message.setText("")
 
 					if not self.ui.first_name_fill.text():
 						error_message.setText("<p><span style='color:#ff0000;'>ERROR: </span><span style='color:#ffffff;'>You must enter your First Name.</span></p>")
+						if self.reset_type == "_": self.reset_type = "first_name_fill"
+						QTimer.singleShot(5000, lambda reset_type_set = "first_name_fill": resetError_M(reset_type_set))
 						return False
 					
 					if not self.ui.surname_fill.text():
 						error_message.setText("<p><span style='color:#ff0000;'>ERROR: </span><span style='color:#ffffff;'>You must enter your Surname.</span></p>")
+						if self.reset_type == "_": self.reset_type = "surname_fill"
+						QTimer.singleShot(5000, lambda reset_type_set = "surname_fill": resetError_M(reset_type_set))
+						return False
+					
+					if self.ui.sex_fill.currentIndex() == 0:
+						error_message.setText("<p><span style='color:#ff0000;'>ERROR: </span><span style='color:#ffffff;'>You must select your Sex.</span></p>")
+						if self.reset_type == "_": self.reset_type = "sex_fill"
+						QTimer.singleShot(5000, lambda reset_type_set = "sex_fill": resetError_M(reset_type_set))
 						return False
 					
 					if not self.ui.section_fill.text():
 						error_message.setText("<p><span style='color:#ff0000;'>ERROR: </span><span style='color:#ffffff;'>You must enter your Section.</span></p>")
+						if self.reset_type == "_": self.reset_type = "section_fill"
+						QTimer.singleShot(5000, lambda reset_type_set = "section_fill": resetError_M(reset_type_set))
 						return False
 					
 					if not self.ui.lrn_fill.text():
 						error_message.setText("<p><span style='color:#ff0000;'>ERROR: </span><span style='color:#ffffff;'>You must enter your LRN.</span></p>")
+						if self.reset_type == "_": self.reset_type = "lrn_fill"
+						QTimer.singleShot(5000, lambda reset_type_set = "lrn_fill": resetError_M(reset_type_set))
 						return False
 					
 					if not self.ui.email_fill.text():
 						error_message.setText("<p><span style='color:#ff0000;'>ERROR: </span><span style='color:#ffffff;'>You must enter your Email.</span></p>")
+						if self.reset_type == "_": self.reset_type = "email_fill"
+						QTimer.singleShot(5000, lambda reset_type_set = "email_fill": resetError_M(reset_type_set))
 						return False
 					
 					if not checkEmail(self.ui.email_fill.text()):
 						error_message.setText("<p><span style='color:#ff0000;'>ERROR: </span><span style='color:#ffffff;'>You must enter a valid Email.</span></p>")
+						if self.reset_type == "_": self.reset_type = "email_not_valid"
+						QTimer.singleShot(5000, lambda reset_type_set = "email_not_valid": resetError_M(reset_type_set))
 						return False
 					
 					if not self.ui.confirm_email_fill.text():
 						error_message.setText("<p><span style='color:#ff0000;'>ERROR: </span><span style='color:#ffffff;'>You must re-enter your Email.</span></p>")
+						if self.reset_type == "_": self.reset_type = "confirm_email_fill"
+						QTimer.singleShot(5000, lambda reset_type_set = "confirm_email_fill": resetError_M(reset_type_set))
 						return False
 					
 					if self.ui.email_fill.text() != self.ui.confirm_email_fill.text():
 						error_message.setText("<p><span style='color:#ff0000;'>ERROR: </span><span style='color:#ffffff;'>The email didn't match.</span></p>")
+						if self.reset_type == "_": self.reset_type = "email_not_match"
+						QTimer.singleShot(5000, lambda reset_type_set = "email_not_match": resetError_M(reset_type_set))
 						return False
 					
 					if self.ui.birthdate_month_fill.currentIndex() == 0:
 						error_message.setText("<p><span style='color:#ff0000;'>ERROR: </span><span style='color:#ffffff;'>You must select your Birthdate Month.</span></p>")
+						if self.reset_type == "_": self.reset_type = "birthdate_month_fill"
+						QTimer.singleShot(5000, lambda reset_type_set = "birthdate_month_fill": resetError_M(reset_type_set))
 						return False
 					
 					if self.ui.birthdate_day_fill.currentIndex() == 0:
 						error_message.setText("<p><span style='color:#ff0000;'>ERROR: </span><span style='color:#ffffff;'>You must select your Birthdate Day.</span></p>")
+						if self.reset_type == "_": self.reset_type = "birthdate_day_fill"
+						QTimer.singleShot(5000, lambda reset_type_set = "birthdate_day_fill": resetError_M(reset_type_set))
 						return False
 					
 					if self.ui.birthdate_year_fill.currentIndex() == 0:
 						error_message.setText("<p><span style='color:#ff0000;'>ERROR: </span><span style='color:#ffffff;'>You must select your Birthdate Year.</span></p>")
+						if self.reset_type == "_": self.reset_type = "birthdate_year_fill"
+						QTimer.singleShot(5000, lambda reset_type_set = "birthdate_year_fill": resetError_M(reset_type_set))
 						return False
 					
-					print("success create")
+					error_message.setText("<p><span style='color:#00ff00;'>SUCCESS: </span><span style='color:#ffffff;'>Please wait.</span></p>")
+
 			case self.ui.back | self.ui.attendance:
 				if event.type() == QEvent.Type.MouseButtonPress:
 					self.inputPassword(obj)
-			case self.ui.suffix_fill | self.ui.birthdate_month_fill | self.ui.birthdate_day_fill | self.ui.birthdate_year_fill:
+			case self.ui.suffix_fill | self.ui.sex_fill | self.ui.birthdate_month_fill | self.ui.birthdate_day_fill | self.ui.birthdate_year_fill:
 				if event.type() == QEvent.Type.MouseButtonPress:
 					obj.setStyleSheet("#infos QComboBox { selection-background-color: transparent; background: transparent; color: white; } #infos QComboBox::down-arrow { image: url(:/icons/Icons/drop-down_focus.png); margin-right:15px; } ")
 				elif event.type() == QEvent.Type.FocusOut:
@@ -608,22 +655,22 @@ class Register(QMainWindow):
 	def fills_m(self, event, obj, type):
 		if type == "enter":
 			match obj:
-				case self.ui.suffix_fill | self.ui.birthdate_month_fill | self.ui.birthdate_day_fill | self.ui.birthdate_year_fill:
+				case self.ui.suffix_fill | self.ui.sex_fill | self.ui.birthdate_month_fill | self.ui.birthdate_day_fill | self.ui.birthdate_year_fill:
 					if not obj.hasFocus():
 						obj.setStyleSheet("#infos QComboBox { selection-background-color: transparent; background: transparent; color: white; } #infos QComboBox::down-arrow { image: url(:/icons/Icons/drop-down_focus.png); margin-right:15px; } ")
 				case self.ui.register_student:
-					self.ui.register_student.setStyleSheet("#register_student { background: rgba(50, 50, 50, 0.4); padding: 5px 10px; }")
+					self.ui.register_student.setStyleSheet("#register_student { background: rgba(50, 50, 50, 0.4); padding: 2px 7px; }")
 				case _:
 					if not obj.hasFocus():
 						obj.setStyleSheet("#infos QLineEdit { background: transparent; color: white; }")
 		elif type == "leave":
 			match obj:
-				case self.ui.suffix_fill | self.ui.birthdate_month_fill | self.ui.birthdate_day_fill | self.ui.birthdate_year_fill:
+				case self.ui.suffix_fill | self.ui.sex_fill | self.ui.birthdate_month_fill | self.ui.birthdate_day_fill | self.ui.birthdate_year_fill:
 					if not obj.hasFocus():
 						if obj.currentIndex() <= 0:
 							obj.setStyleSheet("#infos QComboBox { selection-background-color: transparent; background: transparent; color: rgb(110, 110, 110); } #infos QComboBox::down-arrow { image: url(:/icons/Icons/drop-down_focus.png); margin-right:15px; } ")
 				case self.ui.register_student:
-					self.ui.register_student.setStyleSheet("#register_student { background: rgba(0, 0, 0, 0.4); padding: 5px 10px; }")
+					self.ui.register_student.setStyleSheet("#register_student { background: rgba(0, 0, 0, 0.4); padding: 2px 7px; }")
 				case _:
 					if not obj.hasFocus():
 						if len(obj.text()) <= 0:
