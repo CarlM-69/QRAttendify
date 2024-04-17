@@ -1,17 +1,22 @@
 from PyQt6.QtWidgets import QDialog, QMainWindow, QMessageBox, QInputDialog, QApplication, QLineEdit
 from PyQt6.QtGui import QPixmap, QIcon, QRegularExpressionValidator
 from PyQt6.QtCore import QEvent, Qt, QTimer, QRegularExpression
+from email.mime.multipart import MIMEMultipart
 from dotenv import find_dotenv, load_dotenv
+from email.mime.text import MIMEText
 from Resources.resources import *
 from PyQt6.QtTest import QTest
 from datetime import datetime
 from PyQt6.uic import loadUi
 import configparser
+import qreader
+import smtplib
 import sqlite3
-import qrcode
 import random
 import bcrypt
+import socket
 import segno
+import json
 import sys
 import cv2
 import os
@@ -21,7 +26,6 @@ load_dotenv(find_dotenv())
 ## variables ---------------------------------------------------
 
 actual_setup_passw = os.getenv("ATTENDANCE_DEV_SETUP_PASSWORD")
-
 config = configparser.ConfigParser()
 
 ## defines -----------------------------------------------------
@@ -58,6 +62,20 @@ def res_path(rel_path):
 		base_path = os.path.abspath(".")
 		
 	return os.path.join(base_path, rel_path)
+
+def database_operation(function, *args, **kwargs):
+	db_connect = sqlite3.connect("./Database/students.db")
+	db_cursor = db_connect.cursor()
+
+	try:
+		result = function(db_cursor, *args, *kwargs)
+
+		db_connect.commit()
+	finally:
+		db_cursor.close()
+		db_connect.close()
+
+	return result
 
 ## Main --------------------------------------------------------
 
@@ -219,6 +237,23 @@ class firstTimeSetup(QDialog):
 
 		with open("./config.ini", "w") as info:
 			config.write(info)
+
+		def execute_db(cursor):
+			cursor.execute("""CREATE TABLE IF NOT EXISTS students (
+					id INTEGER PRIMARY KEY,
+					first_name TEXT,
+					middle_name TEXT,
+					surname TEXT,
+					suffix TEXT,
+					sex TEXT,
+					section TEXT,
+					lrn INT,
+					email TEXT,
+					birthdate INT
+				)"""
+			)
+
+		database_operation(execute_db)
 
 		self.hide()
 
@@ -401,6 +436,8 @@ class Register(QMainWindow):
 		self.ui.class_name.setText(f"<p><span style='font-weight:600; color:#ffffff;'>{ config['Info']['Name'] }</span></p>")
 		self.showFullScreen()
 
+		self.is_Registering = False
+
 		suffixes = [
 			"",
 			"Jr.",
@@ -497,8 +534,8 @@ class Register(QMainWindow):
 		self.ui.surname_fill.setValidator(QRegularExpressionValidator(QRegularExpression(r"^[a-zA-Z\s-]+$")))
 		self.ui.section_fill.setValidator(QRegularExpressionValidator(QRegularExpression(r"^[a-zA-Z\s]+$")))
 		self.ui.lrn_fill.setValidator(QRegularExpressionValidator(QRegularExpression(r"^\d+$")))
-		self.ui.email_fill.setValidator(QRegularExpressionValidator(QRegularExpression(r"^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$")))
-		self.ui.confirm_email_fill.setValidator(QRegularExpressionValidator(QRegularExpression(r"^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$")))
+		self.ui.email_fill.setValidator(QRegularExpressionValidator(QRegularExpression(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")))
+		self.ui.confirm_email_fill.setValidator(QRegularExpressionValidator(QRegularExpression(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")))
 
 		self.ui.sex_fill.model().item(0).setEnabled(False)
 		self.ui.birthdate_month_fill.model().item(0).setEnabled(False)
@@ -509,6 +546,9 @@ class Register(QMainWindow):
 		match obj:
 			case self.ui.register_student:
 				if event.type() == QEvent.Type.MouseButtonPress:
+					if self.is_Registering == True:
+						return False
+					
 					error_message = self.ui.error_message
 
 					def checkEmail(email):
@@ -517,7 +557,13 @@ class Register(QMainWindow):
 							"@yahoo.com",
 							"@outlook.com",
 							"@hotmail.com",
-							"@depedqc.ph"
+							"@depedqc.ph",
+							"@ncr2.deped.gov.ph",
+							"@gov.deped.ph",
+							"@deped.gov.ph",
+							"@deped.ph",
+							"@deped.gov.ph",
+							".deped.gov.ph"
 						]
 
 						for domain in allowed_domains:
@@ -605,7 +651,115 @@ class Register(QMainWindow):
 						QTimer.singleShot(5000, lambda reset_type_set = "birthdate_year_fill": resetError_M(reset_type_set))
 						return False
 					
+					def toggle_Selectables():
+						objs = [
+							self.ui.first_name_fill,
+							self.ui.middle_name_fill,
+							self.ui.surname_fill,
+							self.ui.section_fill,
+							self.ui.lrn_fill,
+							self.ui.email_fill,
+							self.ui.confirm_email_fill
+						]
+
+						objs_1 = [
+							self.ui.suffix_fill,
+							self.ui.sex_fill,
+							self.ui.birthdate_month_fill,
+							self.ui.birthdate_day_fill,
+							self.ui.birthdate_year_fill
+						]
+
+						for i in objs:
+							i.setReadOnly(not i.isReadOnly())
+							if i.focusPolicy() != Qt.FocusPolicy.NoFocus:
+								i.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+							else:
+								i.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+
+						for i in objs_1:
+							i.setEnabled(not i.isEnabled())
+							if i.focusPolicy() != Qt.FocusPolicy.NoFocus:
+								i.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+							else:
+								i.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+					
+					self.is_Registering = True
 					error_message.setText("<p><span style='color:#00ff00;'>SUCCESS: </span><span style='color:#ffffff;'>Please wait.</span></p>")
+					self.ui.register_student.setStyleSheet("#register_student { background: rgb(50, 79, 51); padding: 5px 7px; }")
+					self.ui.register_student.setCursor(Qt.CursorShape.ForbiddenCursor)
+					toggle_Selectables()
+
+					has_Internet = False
+
+					try:
+						socket.create_connection(("8.8.8.8", 53), timeout=3)
+						has_Internet = True
+					except OSError:
+						has_Internet = False
+
+					if has_Internet:
+						def check___(text):	
+							if int(text) <= 9:
+								return f"0{text}"
+							else:
+								return text
+
+						birthdate = f"{ self.ui.birthdate_year_fill.currentText() }{ check___(str(self.ui.birthdate_month_fill.currentIndex())) }{ check___(self.ui.birthdate_day_fill.currentText()) }"
+
+						def execute_db(cursor):
+							dataset = [
+								(
+									self.ui.first_name_fill.text(),
+									self.ui.middle_name_fill.text(),
+									self.ui.surname_fill.text(),
+									self.ui.suffix_fill.currentText(),
+									self.ui.sex_fill.currentText(),
+									self.ui.section_fill.text(),
+									int(self.ui.lrn_fill.text()),
+									self.ui.email_fill.text(),
+									int(birthdate)
+								)
+							]
+
+							cursor.executemany("""
+								INSERT INTO students (
+									first_name,
+									middle_name,
+									surname,
+									suffix,
+									sex,
+									section,
+									lrn,
+									email,
+									birthdate
+								)
+							
+								VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+
+								dataset
+							)
+
+						database_operation(execute_db)
+
+						qr_data = [
+							{ "lrn": int(self.ui.lrn_fill.text()) },
+							{ "surname": self.ui.surname_fill.text() }
+						]
+
+						generated_qr = segno.make_qr(
+							json.dumps(qr_data)
+						)
+
+						generated_qr.save("wew.png", scale = 10, border= 0 )
+					else:
+						error_message.setText("<p><span style='color:#ff0000;'>ERROR: </span><span style='color:#ffffff;'>Please check your internet connection and try again.</span></p>")
+						if self.reset_type == "_": self.reset_type = "connection_error"
+						QTimer.singleShot(5000, lambda reset_type_set = "connection_error": resetError_M(reset_type_set))
+						self.ui.register_student.setStyleSheet("#register_student { background: rgba(0, 0, 0, 0.4); padding: 5px 7px; }")
+						self.ui.register_student.setCursor(Qt.CursorShape.PointingHandCursor)
+						toggle_Selectables()
+						self.is_Registering = False
 
 			case self.ui.back | self.ui.attendance:
 				if event.type() == QEvent.Type.MouseButtonPress:
@@ -620,7 +774,8 @@ class Register(QMainWindow):
 						obj.setStyleSheet("#infos QComboBox { selection-background-color: transparent; background: transparent; color: rgb(110, 110, 110); } #infos QComboBox::down-arrow { image: url(:/icons/Icons/drop-down_unfocus.png); margin-right:15px; } ")
 			case _:
 				if event.type() == QEvent.Type.FocusIn:
-					obj.setStyleSheet("#infos QLineEdit { background: transparent; color: white; border-bottom: 2px solid white; }")
+					if not self.ui.first_name_fill.isReadOnly():
+						obj.setStyleSheet("#infos QLineEdit { background: transparent; color: white; border-bottom: 2px solid white; }")
 				elif event.type() == QEvent.Type.FocusOut:
 					if len(obj.text()) > 0:
 						obj.setStyleSheet("#infos QLineEdit { background: transparent; color: white; }")
@@ -659,7 +814,8 @@ class Register(QMainWindow):
 					if not obj.hasFocus():
 						obj.setStyleSheet("#infos QComboBox { selection-background-color: transparent; background: transparent; color: white; } #infos QComboBox::down-arrow { image: url(:/icons/Icons/drop-down_focus.png); margin-right:15px; } ")
 				case self.ui.register_student:
-					self.ui.register_student.setStyleSheet("#register_student { background: rgba(50, 50, 50, 0.4); padding: 2px 7px; }")
+					if not self.is_Registering:
+						self.ui.register_student.setStyleSheet("#register_student { background: rgba(50, 50, 50, 0.4); padding: 5px 7px; }")
 				case _:
 					if not obj.hasFocus():
 						obj.setStyleSheet("#infos QLineEdit { background: transparent; color: white; }")
@@ -670,7 +826,8 @@ class Register(QMainWindow):
 						if obj.currentIndex() <= 0:
 							obj.setStyleSheet("#infos QComboBox { selection-background-color: transparent; background: transparent; color: rgb(110, 110, 110); } #infos QComboBox::down-arrow { image: url(:/icons/Icons/drop-down_focus.png); margin-right:15px; } ")
 				case self.ui.register_student:
-					self.ui.register_student.setStyleSheet("#register_student { background: rgba(0, 0, 0, 0.4); padding: 2px 7px; }")
+					if not self.is_Registering:
+						self.ui.register_student.setStyleSheet("#register_student { background: rgba(0, 0, 0, 0.4); padding: 5px 7px; }")
 				case _:
 					if not obj.hasFocus():
 						if len(obj.text()) <= 0:
