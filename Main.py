@@ -748,7 +748,7 @@ class Register(QMainWindow):
 								dataset
 							)
 
-							cursor.executemany("SELECT id FROM students WHERE first_name = ?", ([self.ui.first_name_fill.text().title()]))
+							cursor.execute("SELECT id FROM students WHERE first_name = ? COLLATE NOCASE", ([self.ui.first_name_fill.text()]))
 							owner_id = cursor.fetchone()
 
 							dataset_1 = [(
