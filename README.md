@@ -9,7 +9,7 @@
 - Students List
 - Editable Information of Students
 - Secured
-## The Diagram For QRAttendify
+## System Diagram
 
 ![QR Attendify Diagram - Final](https://github.com/CarlM-69/QRAttendify/assets/73862565/cc6d7f92-7074-4d75-ab7e-b79eab95d05c)
 
